@@ -1,70 +1,33 @@
-# Getting Started with Create React App
+## 七、解决多级路径刷新页面样式丢失的问题
+				1.public/index.html 中 引入样式时不写 ./ 写 / （常用）
+				2.public/index.html 中 引入样式时不写 ./ 写 %PUBLIC_URL% （常用）
+				3.使用HashRouter
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 八、路由的严格匹配与模糊匹配
+				1.默认使用的是模糊匹配（简单记：【输入的路径】必须包含要【匹配的路径】，且顺序要一致）
+				2.开启严格匹配：<Route exact={true} path="/about" component={About}/>
+				3.严格匹配不要随便开启，需要再开，有些时候开启会导致无法继续匹配二级路由
+            
+## 九、Redirect的使用	
+				1.一般写在所有路由注册的最下方，当所有路由都无法匹配时，跳转到Redirect指定的路由
+				2.具体编码：
+						<Switch>
+							<Route path="/about" component={About}/>
+							<Route path="/home" component={Home}/>
+							<Redirect to="/about"/>
+						</Switch>
+## 十、嵌套路由
+				1.注册子路由时要写上父路由的path值
+				2.路由的匹配是按照注册路由的顺序进行的
 
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## 十一、向路由组件传递参数
+				1.params参数
+							路由链接(携带参数)：<Link to='/demo/test/tom/18'}>详情</Link>
+							注册路由(声明接收)：<Route path="/demo/test/:name/:age" component={Test}/>
+							接收参数：this.props.match.params
+				
+				2.search参数
+							路由链接(携带参数)：<Link to='/demo/test?name=tom&age=18'}>详情</Link>
+							注册路由(无需声明，正常注册即可)：<Route path="/demo/test" component={Test}/>
+							接收参数：this.props.location.search
+							备注：获取到的search是urlencoded编码字符串，需要借助querystring解析
