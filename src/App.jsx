@@ -1,45 +1,32 @@
 import React, { Component } from 'react'
-import {Route,Switch,Redirect} from 'react-router-dom'
+import { Input, Space } from 'antd'
+import 'antd/dist/antd.css'
+import { AudioOutlined } from '@ant-design/icons';
+import ListAnt from './components/ListAnt'
 
-
-import Home from './pages/Home'
-import About from './pages/About'
-import Header from './components/Header'
-import MyNavLink from './components/MyNavLink'
+const { Search } = Input;
 
 export default class App extends Component {
+
+
+	onSearch = (value) => {
+		console.log(value)
+	}
 	render() {
+		const suffix = (
+			<AudioOutlined
+				style={{
+					fontSize: 16,
+					color: '#1890ff',
+				}}
+			/>)
+
 		return (
 			<div>
-				<div className="row">
-					<Header/>
-				</div>
-				<div className="row">
-					<div className="col-xs-2 col-xs-offset-2">
-						<div className="list-group">
-
-							{/* 原生html中，靠<a>跳转不同的页面 */}
-							{/* <a className="list-group-item" href="./about.html">About</a>
-							<a className="list-group-item active" href="./home.html">Home</a> */}
-
-							{/* 在React中靠路由链接实现切换组件--编写路由链接 */}
-							<MyNavLink  to="/about">About</MyNavLink>
-							<MyNavLink  to="/home">Home</MyNavLink>
-						</div>
-					</div>
-					<div className="col-xs-6">
-						<div className="panel">
-							<div className="panel-body">
-								{/* 注册路由,使用 switch 组件可以避免同时显示多个组件 */}
-								<Switch>
-									<Route  path="/about" component={About}/>
-									<Route  path="/home" component={Home}/>
-									<Redirect to="/about"/>
-								</Switch>
-							</div>
-						</div>
-					</div>
-				</div>
+				<Space>
+					<Search placeholder="请输入人名进行查询" enterButton="Search" allowClear onSearch={this.onSearch} suffix={suffix} style={{ width: 400 }} />
+				</Space>
+				<ListAnt/>
 			</div>
 		)
 	}
