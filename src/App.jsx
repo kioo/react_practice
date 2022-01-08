@@ -1,32 +1,41 @@
 import React, { Component } from 'react'
-import { Input, Space } from 'antd'
+import {Layout} from 'antd'
 import 'antd/dist/antd.css'
-import { AudioOutlined } from '@ant-design/icons';
-import ListAnt from './components/ListAnt'
+import './App.css'
 
-const { Search } = Input;
+import ListAnt from './components/ListAnt'
+import SearchAnt from './components/SearchAnt';
+
 
 export default class App extends Component {
-
-
-	onSearch = (value) => {
-		console.log(value)
+	
+	state = {
+		users:[],
+		isFirst:true,
+		isLoding: false,
+		err:'',
 	}
+	
+	updateAppState = (stateObj) =>{
+		this.setState(stateObj)
+	}
+	
 	render() {
-		const suffix = (
-			<AudioOutlined
-				style={{
-					fontSize: 16,
-					color: '#1890ff',
-				}}
-			/>)
+		const { Header, Footer, Sider, Content } = Layout;
 
 		return (
 			<div>
-				<Space>
-					<Search placeholder="请输入人名进行查询" enterButton="Search" allowClear onSearch={this.onSearch} suffix={suffix} style={{ width: 400 }} />
-				</Space>
-				<ListAnt/>
+				<Layout>
+					<Header>GitHub用户名查询系统</Header>
+					<Layout>
+						<Sider>Sider</Sider>
+						<Content>
+							<SearchAnt updateAppState={this.updateAppState}/>
+							<ListAnt {...this.state}/>
+						</Content>
+					</Layout>
+					<Footer>无版权</Footer>
+				</Layout>
 			</div>
 		)
 	}
